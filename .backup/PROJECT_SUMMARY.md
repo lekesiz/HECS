@@ -1,7 +1,5 @@
 # HECS Project Summary - Initial Setup Complete
 
-**Projet:** Extension Edge Computing pour Haguenau.pro
-
 **Date:** 30 Octobre 2025
 **Status:** ✅ Initial Structure Ready
 **Repository:** https://github.com/lekesiz/HECS

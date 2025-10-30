@@ -14,14 +14,13 @@
 
 ## 🌟 What is HECS?
 
-**HECS (Haguenau Edge Control System)** est une plateforme d'edge computing distribuée conçue pour étendre les capacités de **Haguenau.pro**. Elle permet de déployer des nœuds intelligents (Raspberry Pi) dans les réseaux clients pour offrir:
+**HECS (Haguenau Edge Control System)** est une plateforme d'edge computing distribuée conçue pour Netz Informatique. Elle permet de déployer des nœuds intelligents (Raspberry Pi) dans les réseaux clients pour offrir:
 
-- 🎯 **Extension Haguenau.pro:** Intégration profonde avec la plateforme principale
-- 📊 **Contrôle Technique Local:** Gestion autonome et sécurisée des réseaux clients
-- 🤖 **AI Local:** Cache intelligent et traitement local pour Haguenau.pro
-- 🔒 **Conformité GDPR:** Privacy-first design avec données locales
+- 🎯 **Contrôle Technique:** Gestion autonome et sécurisée des réseaux clients
+- 📊 **Avantage Data:** Collecte de données pour BilanCompetence.AI
+- 🛡️ **Positionnement Concurrentiel:** Protection technologique et opérationnelle
+- 🔒 **Conformité GDPR:** Privacy-first design dès la conception
 - 💼 **Fidélisation Client:** Coût de changement élevé via intégration profonde
-- 📈 **Avantage Data:** Données anonymisées (optionnel) pour amélioration continue
 
 ---
 
@@ -45,8 +44,8 @@ HECS utilise une architecture à trois couches:
 
 ```
 ┌─────────────────────────────────────────────┐
-│   HAGUENAU.PRO + HECS CONTROL CENTER        │
-│   (Admin Panel + Task Queue + Integration)  │
+│   HAGUENAU CLOUD CONTROL CENTER             │
+│   (Admin Panel + Task Queue + ML Training)  │
 └──────────┬──────────────────────────────────┘
            │ MQTT/SSH Encrypted Tunnel
            │
@@ -62,9 +61,9 @@ HECS utilise une architecture à trois couches:
 ┌──────────▼──────────────────────────────────┐
 │   CUSTOMER NETWORK LAYER                    │
 │   ├─ Company Data (Local Storage Only)      │
-│   ├─ Haguenau.pro Profile Management        │
-│   ├─ Haguenau.pro Workflow Integration      │
-│   └─ Local AI Cache for Haguenau.pro        │
+│   ├─ Haguenau Pro Profile Management        │
+│   ├─ Assessment Process Integration         │
+│   └─ Local AI Knowledge Base (Public)       │
 └─────────────────────────────────────────────┘
 ```
 
@@ -97,8 +96,7 @@ HECS utilise une architecture à trois couches:
 - **Local AI Cache:** Modèles TinyLLM (3-7B paramètres) optimisés ARM
 - **RAG System:** Recherche dans base de connaissances locale
 - **Privacy-First:** Données sensibles restent sur site
-- **Haguenau.pro Integration:** Synchronisation bidirectionnelle sécurisée
-- **Data Insights:** Collecte anonymisée optionnelle pour amélioration
+- **BilanCompetence.AI:** Collecte anonymisée pour entraînement
 
 ### 🔐 Sécurité Multi-Couches
 

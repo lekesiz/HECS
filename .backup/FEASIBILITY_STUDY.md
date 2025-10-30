@@ -26,12 +26,10 @@
 ### 1.1. Objectif du Projet
 
 HECS (Haguenau Edge Control System) vise à créer une plateforme d'edge computing distribuée permettant à Netz Informatique de:
-- **Étendre Haguenau.pro** avec des capacités edge computing
 - Déployer des nœuds intelligents dans les réseaux clients
-- Offrir un traitement local et une synchronisation sécurisée avec Haguenau.pro
-- Créer un avantage concurrentiel durable via intégration profonde
-- Garantir la conformité GDPR avec données locales
-- (Optionnel) Collecter des données anonymisées pour amélioration continue
+- Collecter des données pour BilanCompetence.AI
+- Créer un avantage concurrentiel durable
+- Garantir la conformité GDPR
 
 ### 1.2. Verdict de Faisabilité
 
@@ -248,18 +246,12 @@ Le projet est **techniquement réalisable** avec les technologies actuelles et l
 
 #### 4.2.2. Flux de Données (Edge → Cloud)
 
-**Synchronisation Haguenau.pro:**
-1. Collecte locale de profils et workflows
-2. Synchronisation bidirectionnelle sécurisée avec Haguenau.pro
-3. Cache local pour accès rapide et mode offline
-4. Mise à jour incrémentale (delta sync)
-
-**Télémétrie (Optionnel):**
 1. Collecte locale de métriques/logs
 2. Agrégation et anonymisation sur edge
 3. Compression et chiffrement
 4. Upload périodique vers cloud (batch)
-5. Stockage pour analytics et amélioration continue
+5. Stockage dans data lake
+6. Traitement ML pour BilanCompetence.AI
 
 ### 4.3. Sécurité Multi-Couches
 
