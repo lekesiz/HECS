@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
+import Layout from './components/Layout'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import DashboardPage from './pages/DashboardPage'
@@ -27,7 +28,9 @@ function App() {
             path="/dashboard"
             element={
               <ProtectedRoute>
-                <DashboardPage />
+                <Layout>
+                  <DashboardPage />
+                </Layout>
               </ProtectedRoute>
             }
           />
@@ -37,7 +40,9 @@ function App() {
             path="/devices"
             element={
               <ProtectedRoute>
-                <DeviceListPage />
+                <Layout>
+                  <DeviceListPage />
+                </Layout>
               </ProtectedRoute>
             }
           />
@@ -45,7 +50,9 @@ function App() {
             path="/devices/new"
             element={
               <ProtectedRoute>
-                <CreateDevicePage />
+                <Layout>
+                  <CreateDevicePage />
+                </Layout>
               </ProtectedRoute>
             }
           />
@@ -53,7 +60,9 @@ function App() {
             path="/devices/:deviceId"
             element={
               <ProtectedRoute>
-                <DeviceDetailPage />
+                <Layout>
+                  <DeviceDetailPage />
+                </Layout>
               </ProtectedRoute>
             }
           />
@@ -61,7 +70,9 @@ function App() {
             path="/devices/:deviceId/edit"
             element={
               <ProtectedRoute>
-                <EditDevicePage />
+                <Layout>
+                  <EditDevicePage />
+                </Layout>
               </ProtectedRoute>
             }
           />
@@ -71,7 +82,9 @@ function App() {
             path="/tasks"
             element={
               <ProtectedRoute>
-                <TaskListPage />
+                <Layout>
+                  <TaskListPage />
+                </Layout>
               </ProtectedRoute>
             }
           />
@@ -79,7 +92,9 @@ function App() {
             path="/tasks/new"
             element={
               <ProtectedRoute>
-                <CreateTaskPage />
+                <Layout>
+                  <CreateTaskPage />
+                </Layout>
               </ProtectedRoute>
             }
           />
@@ -87,7 +102,9 @@ function App() {
             path="/tasks/:taskId"
             element={
               <ProtectedRoute>
-                <TaskDetailPage />
+                <Layout>
+                  <TaskDetailPage />
+                </Layout>
               </ProtectedRoute>
             }
           />

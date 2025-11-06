@@ -2,52 +2,15 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { useDeviceStats } from '../hooks/useDevices'
 import { useTaskStats } from '../hooks/useTasks'
-import { Activity, Server, Zap, LogOut, User, ArrowRight } from 'lucide-react'
+import { Activity, Server, Zap, ArrowRight } from 'lucide-react'
 
 export default function DashboardPage() {
-  const { user, logout } = useAuth()
+  const { user } = useAuth()
   const { stats: deviceStats, loading: devicesLoading } = useDeviceStats()
   const { stats: taskStats, loading: tasksLoading } = useTaskStats()
 
-  const handleLogout = async () => {
-    await logout()
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Header */}
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <Zap className="w-8 h-8 text-blue-600 mr-3" />
-              <div>
-                <h1 className="text-2xl font-bold text-gray-800">
-                  HECS Control Plane
-                </h1>
-                <p className="text-sm text-gray-600">
-                  Haguenau Edge Control System
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center text-sm text-gray-700">
-                <User className="w-4 h-4 mr-2" />
-                <span className="font-medium">{user?.username}</span>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-              >
-                <LogOut className="w-4 h-4 mr-2" />
-                Logout
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
+    <div className="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-full">
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         {/* Welcome Message */}
         <div className="mb-8">
