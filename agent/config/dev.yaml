@@ -1,0 +1,46 @@
+# HECS Agent Development Configuration
+
+agent:
+  id: "dev-agent-001"
+  name: "hecs-agent-dev"
+  log_level: "debug"
+
+control_plane:
+  url: "http://localhost:8000"
+  api_key: "dev-api-key"
+  connect_timeout: 5s
+  request_timeout: 30s
+
+mqtt:
+  broker: "tcp://localhost:1883"
+  client_id: "hecs-agent-dev"
+  username: "hecs"
+  password: "hecs"
+  qos: 1
+  topics:
+    commands: "hecs/agent/+/commands"
+    status: "hecs/agent/+/status"
+    metrics: "hecs/agent/+/metrics"
+
+tasks:
+  worker_count: 2
+  queue_size: 10
+  timeout: 60s
+
+health:
+  port: 8080
+  enabled: true
+
+metrics:
+  enabled: true
+  port: 9090
+  interval: 10s
+
+update:
+  enabled: false
+  check_interval: 24h
+  auto_update: false
+
+local_storage:
+  path: "./data"
+  max_size_mb: 100
