@@ -4,13 +4,36 @@ HECS Control Plane - Main Application
 from fastapi import FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from contextlib import asynccontextmanager
 import uvicorn
 from datetime import datetime
 import os
 
+from database import init_db, close_db
+from routes import auth, devices, tasks
+
 # Version info
 VERSION = os.getenv("APP_VERSION", "1.0.0-alpha")
 APP_NAME = os.getenv("APP_NAME", "HECS Control Plane")
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Startup and shutdown events"""
+    # Startup
+    print("🚀 Starting HECS Control Plane...")
+    try:
+        await init_db()
+        print("✅ Database initialized")
+    except Exception as e:
+        print(f"⚠️  Database initialization failed: {e}")
+
+    yield
+
+    # Shutdown
+    print("🛑 Shutting down HECS Control Plane...")
+    await close_db()
+    print("✅ Database connections closed")
 
 # Create FastAPI app
 app = FastAPI(
@@ -20,6 +43,7 @@ app = FastAPI(
     docs_url="/api/docs",
     redoc_url="/api/redoc",
     openapi_url="/api/openapi.json",
+    lifespan=lifespan,
 )
 
 # CORS middleware
@@ -30,6 +54,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include routers
+app.include_router(auth.router, prefix="/api/v1")
+app.include_router(devices.router, prefix="/api/v1")
+app.include_router(tasks.router, prefix="/api/v1")
 
 
 @app.get("/", tags=["Root"])

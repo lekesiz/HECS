@@ -1,4 +1,8 @@
 """
-HECS Models Package
+Models package - Import all models here
 """
-# Models will be imported here as they are created
+from models.user import User
+from models.device import Device, Customer
+from models.task import Task
+
+__all__ = ["User", "Device", "Customer", "Task"]

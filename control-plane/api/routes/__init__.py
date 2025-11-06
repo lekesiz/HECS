@@ -1,4 +1,6 @@
 """
 HECS API Routes Package
 """
-# Routes will be imported here as they are created
+from routes import auth, devices, tasks
+
+__all__ = ["auth", "devices", "tasks"]
