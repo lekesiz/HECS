@@ -1,0 +1,46 @@
+# HECS Agent Configuration
+
+agent:
+  id: ""  # Auto-generated if empty
+  name: "hecs-agent-default"
+  log_level: "info"
+
+control_plane:
+  url: "http://backend:8000"
+  api_key: ""
+  connect_timeout: 10s
+  request_timeout: 30s
+
+mqtt:
+  broker: "tcp://mqtt:1883"
+  client_id: ""  # Auto-generated if empty
+  username: "hecs"
+  password: ""
+  qos: 1
+  topics:
+    commands: "hecs/agent/+/commands"
+    status: "hecs/agent/+/status"
+    metrics: "hecs/agent/+/metrics"
+
+tasks:
+  worker_count: 4
+  queue_size: 100
+  timeout: 300s
+
+health:
+  port: 8080
+  enabled: true
+
+metrics:
+  enabled: true
+  port: 9090
+  interval: 30s
+
+update:
+  enabled: true
+  check_interval: 1h
+  auto_update: false
+
+local_storage:
+  path: "/app/data"
+  max_size_mb: 1000

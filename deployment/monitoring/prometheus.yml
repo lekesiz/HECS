@@ -1,0 +1,77 @@
+# Prometheus Configuration for HECS
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'hecs-cluster'
+    environment: 'development'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+# Load rules once and periodically evaluate them
+rule_files:
+  - "alerts/*.yml"
+
+# Scrape configurations
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # HECS Backend API
+  - job_name: 'hecs-backend'
+    static_configs:
+      - targets: ['backend:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # HECS Agents (dynamic discovery via HTTP SD)
+  - job_name: 'hecs-agents'
+    http_sd_configs:
+      - url: 'http://backend:8000/api/v1/prometheus/sd'
+        refresh_interval: 30s
+    relabel_configs:
+      - source_labels: [__meta_hecs_agent_id]
+        target_label: agent_id
+      - source_labels: [__meta_hecs_agent_name]
+        target_label: agent_name
+      - source_labels: [__meta_hecs_customer_id]
+        target_label: customer_id
+
+  # PostgreSQL Exporter
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+    scrape_interval: 30s
+
+  # Redis Exporter
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis-exporter:9121']
+    scrape_interval: 30s
+
+  # MQTT Broker (if exporter available)
+  - job_name: 'mqtt'
+    static_configs:
+      - targets: ['mqtt-exporter:9234']
+    scrape_interval: 30s
+
+  # Node Exporter (system metrics)
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 30s
+
+  # Grafana metrics
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
