@@ -14,7 +14,9 @@ import TaskListPage from './pages/TaskListPage'
 import TaskDetailPage from './pages/TaskDetailPage'
 import CreateTaskPage from './pages/CreateTaskPage'
 import CustomerListPage from './pages/CustomerListPage'
+import CustomerDetailPage from './pages/CustomerDetailPage'
 import CreateCustomerPage from './pages/CreateCustomerPage'
+import EditCustomerPage from './pages/EditCustomerPage'
 import './App.css'
 
 function App() {
@@ -130,6 +132,26 @@ function App() {
               <ProtectedRoute>
                 <Layout>
                   <CreateCustomerPage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/customers/:customerId"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <CustomerDetailPage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/customers/:customerId/edit"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <EditCustomerPage />
                 </Layout>
               </ProtectedRoute>
             }
