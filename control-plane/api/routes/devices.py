@@ -13,6 +13,7 @@ from models.user import User
 from models.device import Device
 from schemas import DeviceCreate, DeviceUpdate, DeviceResponse
 from routes.auth import get_current_active_user
+from utils.websocket import manager
 
 router = APIRouter(prefix="/devices", tags=["Devices"])
 
@@ -99,6 +100,16 @@ async def create_device(
     await db.commit()
     await db.refresh(new_device)
 
+    # Broadcast device creation to WebSocket clients
+    await manager.broadcast_device_update({
+        "id": str(new_device.id),
+        "name": new_device.name,
+        "device_id": new_device.device_id,
+        "status": new_device.status,
+        "customer_id": str(new_device.customer_id) if new_device.customer_id else None,
+        "action": "created"
+    })
+
     return new_device
 
 
@@ -138,6 +149,16 @@ async def update_device(
     await db.commit()
     await db.refresh(device)
 
+    # Broadcast device update to WebSocket clients
+    await manager.broadcast_device_update({
+        "id": str(device.id),
+        "name": device.name,
+        "device_id": device.device_id,
+        "status": device.status,
+        "customer_id": str(device.customer_id) if device.customer_id else None,
+        "action": "updated"
+    })
+
     return device
 
 
@@ -158,6 +179,14 @@ async def delete_device(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Device with ID {device_id} not found"
         )
+
+    # Broadcast device deletion before removing from database
+    await manager.broadcast_device_update({
+        "id": str(device.id),
+        "name": device.name,
+        "device_id": device.device_id,
+        "action": "deleted"
+    })
 
     await db.delete(device)
     await db.commit()
@@ -187,6 +216,16 @@ async def device_heartbeat(
 
     await db.commit()
     await db.refresh(device)
+
+    # Broadcast heartbeat/status change to WebSocket clients
+    await manager.broadcast_device_update({
+        "id": str(device.id),
+        "name": device.name,
+        "device_id": device.device_id,
+        "status": device.status,
+        "last_seen": device.last_seen.isoformat(),
+        "action": "heartbeat"
+    })
 
     return device
 

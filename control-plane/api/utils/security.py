@@ -48,3 +48,12 @@ def decode_access_token(token: str) -> Optional[dict]:
         return payload
     except JWTError:
         return None
+
+
+def verify_token(token: str) -> dict:
+    """Verify JWT token and return payload (raises exception if invalid)"""
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload
+    except JWTError as e:
+        raise ValueError(f"Invalid token: {e}")

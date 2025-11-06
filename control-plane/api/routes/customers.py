@@ -12,6 +12,7 @@ from models.device import Customer
 from schemas import CustomerCreate, CustomerUpdate, CustomerResponse
 from utils.security import get_current_user
 from models.user import User
+from utils.websocket import manager
 
 router = APIRouter(prefix="/customers", tags=["customers"])
 
@@ -75,6 +76,17 @@ async def create_customer(
     await db.commit()
     await db.refresh(customer)
 
+    # Broadcast customer creation to WebSocket clients
+    await manager.broadcast_customer_update({
+        "id": str(customer.id),
+        "name": customer.name,
+        "company": customer.company,
+        "email": customer.email,
+        "is_active": customer.is_active,
+        "subscription_tier": customer.subscription_tier,
+        "action": "created"
+    })
+
     return customer.to_dict()
 
 
@@ -109,6 +121,17 @@ async def update_customer(
     await db.commit()
     await db.refresh(customer)
 
+    # Broadcast customer update to WebSocket clients
+    await manager.broadcast_customer_update({
+        "id": str(customer.id),
+        "name": customer.name,
+        "company": customer.company,
+        "email": customer.email,
+        "is_active": customer.is_active,
+        "subscription_tier": customer.subscription_tier,
+        "action": "updated"
+    })
+
     return customer.to_dict()
 
 
@@ -124,6 +147,13 @@ async def delete_customer(
 
     if not customer:
         raise HTTPException(status_code=404, detail="Customer not found")
+
+    # Broadcast customer deletion before removing from database
+    await manager.broadcast_customer_update({
+        "id": str(customer.id),
+        "name": customer.name,
+        "action": "deleted"
+    })
 
     await db.delete(customer)
     await db.commit()

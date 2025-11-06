@@ -10,7 +10,7 @@ from datetime import datetime
 import os
 
 from database import init_db, close_db
-from routes import auth, devices, tasks, customers
+from routes import auth, devices, tasks, customers, websocket
 
 # Version info
 VERSION = os.getenv("APP_VERSION", "1.0.0-alpha")
@@ -60,6 +60,7 @@ app.include_router(auth.router, prefix="/api/v1")
 app.include_router(devices.router, prefix="/api/v1")
 app.include_router(tasks.router, prefix="/api/v1")
 app.include_router(customers.router, prefix="/api/v1")
+app.include_router(websocket.router)  # WebSocket has no prefix (uses /ws)
 
 
 @app.get("/", tags=["Root"])

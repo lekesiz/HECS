@@ -13,6 +13,7 @@ from models.user import User
 from models.task import Task
 from schemas import TaskCreate, TaskUpdate, TaskResponse
 from routes.auth import get_current_active_user
+from utils.websocket import manager
 
 router = APIRouter(prefix="/tasks", tags=["Tasks"])
 
@@ -92,6 +93,16 @@ async def create_task(
     await db.commit()
     await db.refresh(new_task)
 
+    # Broadcast task creation to WebSocket clients
+    await manager.broadcast_task_update({
+        "id": str(new_task.id),
+        "name": new_task.name,
+        "task_type": new_task.task_type,
+        "status": new_task.status,
+        "device_id": str(new_task.device_id),
+        "action": "created"
+    })
+
     return new_task
 
 
@@ -135,6 +146,18 @@ async def update_task(
     await db.commit()
     await db.refresh(task)
 
+    # Broadcast task update to WebSocket clients
+    await manager.broadcast_task_update({
+        "id": str(task.id),
+        "name": task.name,
+        "task_type": task.task_type,
+        "status": task.status,
+        "device_id": str(task.device_id),
+        "started_at": task.started_at.isoformat() if task.started_at else None,
+        "completed_at": task.completed_at.isoformat() if task.completed_at else None,
+        "action": "updated"
+    })
+
     return task
 
 
@@ -155,6 +178,15 @@ async def delete_task(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Task with ID {task_id} not found"
         )
+
+    # Broadcast task deletion before removing from database
+    await manager.broadcast_task_update({
+        "id": str(task.id),
+        "name": task.name,
+        "task_type": task.task_type,
+        "device_id": str(task.device_id),
+        "action": "deleted"
+    })
 
     await db.delete(task)
     await db.commit()
@@ -196,6 +228,17 @@ async def retry_task(
 
     await db.commit()
     await db.refresh(task)
+
+    # Broadcast task retry to WebSocket clients
+    await manager.broadcast_task_update({
+        "id": str(task.id),
+        "name": task.name,
+        "task_type": task.task_type,
+        "status": task.status,
+        "device_id": str(task.device_id),
+        "retry_count": task.retry_count,
+        "action": "retried"
+    })
 
     return task
 
