@@ -116,10 +116,16 @@ export default function DashboardPage() {
           </Link>
 
           {/* Tasks Card */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="flex items-center mb-4">
-              <Zap className="w-8 h-8 text-purple-500 mr-3" />
-              <h2 className="text-xl font-semibold text-gray-800">Tasks</h2>
+          <Link
+            to="/tasks"
+            className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer block"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center">
+                <Zap className="w-8 h-8 text-purple-500 mr-3" />
+                <h2 className="text-xl font-semibold text-gray-800">Tasks</h2>
+              </div>
+              <ArrowRight className="w-5 h-5 text-gray-400" />
             </div>
             {tasksLoading ? (
               <div className="flex items-center text-gray-500">
@@ -167,7 +173,7 @@ export default function DashboardPage() {
             ) : (
               <p className="text-red-500">Failed to load task stats</p>
             )}
-          </div>
+          </Link>
 
           {/* System Status */}
           <div className="bg-white rounded-lg shadow-lg p-6">

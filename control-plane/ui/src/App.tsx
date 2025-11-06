@@ -8,6 +8,9 @@ import DeviceListPage from './pages/DeviceListPage'
 import DeviceDetailPage from './pages/DeviceDetailPage'
 import CreateDevicePage from './pages/CreateDevicePage'
 import EditDevicePage from './pages/EditDevicePage'
+import TaskListPage from './pages/TaskListPage'
+import TaskDetailPage from './pages/TaskDetailPage'
+import CreateTaskPage from './pages/CreateTaskPage'
 import './App.css'
 
 function App() {
@@ -59,6 +62,32 @@ function App() {
             element={
               <ProtectedRoute>
                 <EditDevicePage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Task Management Routes */}
+          <Route
+            path="/tasks"
+            element={
+              <ProtectedRoute>
+                <TaskListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tasks/new"
+            element={
+              <ProtectedRoute>
+                <CreateTaskPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/tasks/:taskId"
+            element={
+              <ProtectedRoute>
+                <TaskDetailPage />
               </ProtectedRoute>
             }
           />
