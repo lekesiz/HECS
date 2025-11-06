@@ -4,6 +4,10 @@ import ProtectedRoute from './components/ProtectedRoute'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import DashboardPage from './pages/DashboardPage'
+import DeviceListPage from './pages/DeviceListPage'
+import DeviceDetailPage from './pages/DeviceDetailPage'
+import CreateDevicePage from './pages/CreateDevicePage'
+import EditDevicePage from './pages/EditDevicePage'
 import './App.css'
 
 function App() {
@@ -21,6 +25,40 @@ function App() {
             element={
               <ProtectedRoute>
                 <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Device Management Routes */}
+          <Route
+            path="/devices"
+            element={
+              <ProtectedRoute>
+                <DeviceListPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/devices/new"
+            element={
+              <ProtectedRoute>
+                <CreateDevicePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/devices/:deviceId"
+            element={
+              <ProtectedRoute>
+                <DeviceDetailPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/devices/:deviceId/edit"
+            element={
+              <ProtectedRoute>
+                <EditDevicePage />
               </ProtectedRoute>
             }
           />

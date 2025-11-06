@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { useDeviceStats } from '../hooks/useDevices'
 import { useTaskStats } from '../hooks/useTasks'
-import { Activity, Server, Zap, LogOut, User } from 'lucide-react'
+import { Activity, Server, Zap, LogOut, User, ArrowRight } from 'lucide-react'
 
 export default function DashboardPage() {
   const { user, logout } = useAuth()
@@ -61,10 +62,16 @@ export default function DashboardPage() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {/* Devices Card */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
-            <div className="flex items-center mb-4">
-              <Server className="w-8 h-8 text-blue-500 mr-3" />
-              <h2 className="text-xl font-semibold text-gray-800">Devices</h2>
+          <Link
+            to="/devices"
+            className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow cursor-pointer block"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center">
+                <Server className="w-8 h-8 text-blue-500 mr-3" />
+                <h2 className="text-xl font-semibold text-gray-800">Devices</h2>
+              </div>
+              <ArrowRight className="w-5 h-5 text-gray-400" />
             </div>
             {devicesLoading ? (
               <div className="flex items-center text-gray-500">
@@ -106,7 +113,7 @@ export default function DashboardPage() {
             ) : (
               <p className="text-red-500">Failed to load device stats</p>
             )}
-          </div>
+          </Link>
 
           {/* Tasks Card */}
           <div className="bg-white rounded-lg shadow-lg p-6">
