@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { devicesApi, Device } from '../api/devices'
+import { useDeviceUpdates } from '../hooks/useDeviceUpdates'
 import {
   Server,
   Plus,
@@ -37,6 +38,24 @@ export default function DeviceListPage() {
   useEffect(() => {
     fetchDevices()
   }, [statusFilter])
+
+  // WebSocket real-time updates
+  const handleDeviceUpdate = useCallback((updatedDevice: Device) => {
+    setDevices((prevDevices) => {
+      const index = prevDevices.findIndex((d) => d.id === updatedDevice.id)
+      if (index !== -1) {
+        // Update existing device
+        const newDevices = [...prevDevices]
+        newDevices[index] = updatedDevice
+        return newDevices
+      } else {
+        // Add new device
+        return [...prevDevices, updatedDevice]
+      }
+    })
+  }, [])
+
+  useDeviceUpdates(handleDeviceUpdate)
 
   const filteredDevices = devices.filter(
     (device) =>

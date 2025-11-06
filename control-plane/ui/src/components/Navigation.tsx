@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import WebSocketStatus from './WebSocketStatus'
 import {
   Zap,
   LayoutDashboard,
@@ -91,7 +92,12 @@ export default function Navigation() {
           </div>
 
           {/* User Menu */}
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
+            {/* WebSocket Status */}
+            <div className="hidden md:block">
+              <WebSocketStatus />
+            </div>
+
             {/* Desktop User Menu */}
             <div className="hidden md:block relative">
               <button

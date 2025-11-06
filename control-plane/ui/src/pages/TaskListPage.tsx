@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { tasksApi, Task } from '../api/tasks'
+import { useTaskUpdates } from '../hooks/useTaskUpdates'
 import {
   Zap,
   Plus,
@@ -37,6 +38,24 @@ export default function TaskListPage() {
   useEffect(() => {
     fetchTasks()
   }, [statusFilter])
+
+  // WebSocket real-time updates
+  const handleTaskUpdate = useCallback((updatedTask: Task) => {
+    setTasks((prevTasks) => {
+      const index = prevTasks.findIndex((t) => t.id === updatedTask.id)
+      if (index !== -1) {
+        // Update existing task
+        const newTasks = [...prevTasks]
+        newTasks[index] = updatedTask
+        return newTasks
+      } else {
+        // Add new task
+        return [...prevTasks, updatedTask]
+      }
+    })
+  }, [])
+
+  useTaskUpdates(handleTaskUpdate)
 
   const filteredTasks = tasks.filter(
     (task) =>
