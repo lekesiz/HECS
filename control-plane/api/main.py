@@ -10,7 +10,7 @@ from datetime import datetime
 import os
 
 from database import init_db, close_db
-from routes import auth, devices, tasks
+from routes import auth, devices, tasks, customers
 
 # Version info
 VERSION = os.getenv("APP_VERSION", "1.0.0-alpha")
@@ -59,6 +59,7 @@ app.add_middleware(
 app.include_router(auth.router, prefix="/api/v1")
 app.include_router(devices.router, prefix="/api/v1")
 app.include_router(tasks.router, prefix="/api/v1")
+app.include_router(customers.router, prefix="/api/v1")
 
 
 @app.get("/", tags=["Root"])

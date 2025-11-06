@@ -8,6 +8,7 @@ import {
   Server,
   ListChecks,
   User,
+  Users,
   LogOut,
   ChevronDown,
   Menu,
@@ -48,6 +49,11 @@ export default function Navigation() {
       path: '/tasks',
       label: 'Tasks',
       icon: ListChecks,
+    },
+    {
+      path: '/customers',
+      label: 'Customers',
+      icon: Users,
     },
   ]
 

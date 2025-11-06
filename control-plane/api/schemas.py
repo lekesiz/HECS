@@ -128,6 +128,18 @@ class CustomerCreate(CustomerBase):
     phone: Optional[str] = None
     address: Optional[str] = None
     haguenau_customer_id: Optional[str] = None
+    subscription_tier: Optional[str] = "basic"
+
+
+class CustomerUpdate(BaseModel):
+    name: Optional[str] = None
+    company: Optional[str] = None
+    email: Optional[EmailStr] = None
+    phone: Optional[str] = None
+    address: Optional[str] = None
+    haguenau_customer_id: Optional[str] = None
+    subscription_tier: Optional[str] = None
+    is_active: Optional[bool] = None
 
 
 class CustomerResponse(CustomerBase):

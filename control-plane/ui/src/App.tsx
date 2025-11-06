@@ -13,6 +13,8 @@ import EditDevicePage from './pages/EditDevicePage'
 import TaskListPage from './pages/TaskListPage'
 import TaskDetailPage from './pages/TaskDetailPage'
 import CreateTaskPage from './pages/CreateTaskPage'
+import CustomerListPage from './pages/CustomerListPage'
+import CreateCustomerPage from './pages/CreateCustomerPage'
 import './App.css'
 
 function App() {
@@ -106,6 +108,28 @@ function App() {
               <ProtectedRoute>
                 <Layout>
                   <TaskDetailPage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Customer Management Routes */}
+          <Route
+            path="/customers"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <CustomerListPage />
+                </Layout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/customers/new"
+            element={
+              <ProtectedRoute>
+                <Layout>
+                  <CreateCustomerPage />
                 </Layout>
               </ProtectedRoute>
             }
